@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEALS – Snack</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Commissioner:wght@300;400;600;700&family=Lobster&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .recipe-grid__loading {
+      grid-column: 1 / -1;
+      text-align: center;
+      font-family: Commissioner, sans-serif;
+      font-size: 1rem;
+      color: var(--navy, #1a2744);
+      padding: 3rem 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <div class="navbar__inner">
+      <a href="../index.html" class="navbar__logo-link" aria-label="MEALS – go to homepage">
+        <img src="../Brand essentials/light-mode-logo.png" alt="MEALS" class="navbar__logo-img">
+      </a>
+      <button class="navbar__hamburger" id="navbar-hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navbar-links">
+        <span class="navbar__hamburger-bar"></span>
+        <span class="navbar__hamburger-bar"></span>
+        <span class="navbar__hamburger-bar"></span>
+      </button>
+      <ul class="navbar__links" id="navbar-links" role="list">
+        <li><a href="../index.html"  class="navbar__link">Home</a></li>
+        <li><a href="recipes.html"   class="navbar__link navbar__link--active">Recipes</a></li>
+        <li><a href="#about"         class="navbar__link">About</a></li>
+        <li><a href="#contact"       class="navbar__link">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="hero" id="hero">
+    <div class="hero__content">
+      <p class="hero__eyebrow">perfect meals for</p>
+      <h1 class="hero__headline">snack</h1>
+    </div>
+    <div class="hero__plate-shadow" aria-hidden="true"></div>
+    <div class="hero__plates-row" aria-hidden="true">
+      <div class="hero__plate-item hero__plate-item--1"><img src="../Brand essentials/hero-section-plates/1.png" alt="" class="hero__plate-img"></div>
+      <div class="hero__plate-item hero__plate-item--2"><img src="../Brand essentials/hero-section-plates/2.png" alt="" class="hero__plate-img"></div>
+      <div class="hero__plate-item hero__plate-item--3"><img src="../Brand essentials/hero-section-plates/3.png" alt="" class="hero__plate-img"></div>
+      <div class="hero__plate-item hero__plate-item--4"><img src="../Brand essentials/hero-section-plates/4.png" alt="" class="hero__plate-img"></div>
+      <div class="hero__plate-item hero__plate-item--5"><img src="../Brand essentials/hero-section-plates/5.png" alt="" class="hero__plate-img"></div>
+    </div>
+  </section>
+
+  <section class="page-filters" aria-label="Filter snack recipes">
+    <div class="page-filters__inner">
+      <div class="filter-drop" data-filter="ingredients">
+        <button class="filter-drop__btn" aria-haspopup="true" aria-expanded="false">Ingredients <span class="filter-drop__arrow" aria-hidden="true">▾</span></button>
+        <div class="filter-drop__panel"><p class="filter-drop__placeholder">Coming soon</p></div>
+      </div>
+      <div class="filter-drop" data-filter="calories">
+        <button class="filter-drop__btn" aria-haspopup="true" aria-expanded="false">Calories <span class="filter-drop__arrow" aria-hidden="true">▾</span></button>
+        <div class="filter-drop__panel"><p class="filter-drop__placeholder">Coming soon</p></div>
+      </div>
+      <div class="filter-drop" data-filter="protein">
+        <button class="filter-drop__btn" aria-haspopup="true" aria-expanded="false">Protein <span class="filter-drop__arrow" aria-hidden="true">▾</span></button>
+        <div class="filter-drop__panel"><p class="filter-drop__placeholder">Coming soon</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="recipe-grid-section" data-category="snack">
+    <div class="recipe-grid">
+      <p class="recipe-grid__loading">Loading recipes…</p>
+    </div>
+  </section>
+
+  <script src="../js/sanity-client.js"></script>
+  <script src="../js/category.js"></script>
+
+  <script>
+    const hamburgerBtn = document.getElementById('navbar-hamburger');
+    const navLinksList  = document.getElementById('navbar-links');
+    hamburgerBtn.addEventListener('click', () => {
+      const isOpen = navLinksList.classList.toggle('navbar__links--open');
+      hamburgerBtn.setAttribute('aria-expanded', String(isOpen));
+    });
+    navLinksList.querySelectorAll('.navbar__link').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinksList.classList.remove('navbar__links--open');
+        hamburgerBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  </script>
+
+</body>
+</html>

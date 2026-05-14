@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEALS – Recipes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Commissioner:wght@300;400;600;700&family=Lobster&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <div class="navbar__inner">
+      <a href="../index.html" class="navbar__logo-link" aria-label="MEALS – go to homepage">
+        <img src="../Brand essentials/light-mode-logo.png" alt="MEALS" class="navbar__logo-img">
+      </a>
+      <button class="navbar__hamburger" id="navbar-hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navbar-links">
+        <span class="navbar__hamburger-bar"></span>
+        <span class="navbar__hamburger-bar"></span>
+        <span class="navbar__hamburger-bar"></span>
+      </button>
+      <ul class="navbar__links" id="navbar-links" role="list">
+        <li><a href="../index.html"  class="navbar__link">Home</a></li>
+        <li><a href="recipes.html"   class="navbar__link navbar__link--active">Recipes</a></li>
+        <li><a href="#about"         class="navbar__link">About</a></li>
+        <li><a href="#contact"       class="navbar__link">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Recipes landing page — coming soon -->
+  <main style="min-height:80vh; display:flex; align-items:center; justify-content:center; background:var(--color-cream);">
+    <p style="font-family:var(--font-sans); font-size:1.2rem; color:var(--color-navy); opacity:0.5;">Recipes landing page — coming soon</p>
+  </main>
+
+  <script>
+    const hamburgerBtn = document.getElementById('navbar-hamburger');
+    const navLinksList  = document.getElementById('navbar-links');
+    hamburgerBtn.addEventListener('click', () => {
+      const isOpen = navLinksList.classList.toggle('navbar__links--open');
+      hamburgerBtn.setAttribute('aria-expanded', String(isOpen));
+    });
+    navLinksList.querySelectorAll('.navbar__link').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinksList.classList.remove('navbar__links--open');
+        hamburgerBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  </script>
+
+</body>
+</html>

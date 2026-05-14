@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEALS — Loading…</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Commissioner:wght@300;400;500;600;700&family=Lobster&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../recipe-page.css">
+
+  <style>
+    /* Loading skeleton shown before Sanity data arrives */
+    .recipe-grid__loading {
+      text-align: center;
+      font-family: Commissioner, sans-serif;
+      font-size: 1rem;
+      color: var(--navy, #1a2744);
+      padding: 3rem 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       NAVBAR
+  ============================================================ -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar__inner">
+      <a href="../index.html" class="navbar__logo-link" aria-label="MEALS — go to homepage">
+        <img src="../Brand essentials/light-mode-logo.png" alt="MEALS" class="navbar__logo-img">
+      </a>
+      <button class="navbar__hamburger" id="navbar-hamburger"
+              aria-label="Toggle navigation menu"
+              aria-expanded="false"
+              aria-controls="navbar-links">
+        <span class="navbar__hamburger-bar"></span>
+        <span class="navbar__hamburger-bar"></span>
+        <span class="navbar__hamburger-bar"></span>
+      </button>
+      <ul class="navbar__links" id="navbar-links" role="list">
+        <li><a href="../index.html" class="navbar__link">Home</a></li>
+        <li><a href="recipes.html"  class="navbar__link navbar__link--active">Recipes</a></li>
+        <li><a href="#about"        class="navbar__link">About</a></li>
+        <li><a href="#contact"      class="navbar__link">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <!-- ============================================================
+       MORPHING FOOD PHOTO
+       Fixed overlay; JS repositions it from hero → benefits.
+  ============================================================ -->
+  <div class="morph" id="morph" aria-hidden="true">
+    <div class="morph__plate" id="morph-plate">
+
+      <!-- Populated by recipe-page-data.js -->
+      <img src="" alt="" class="morph__img" id="morph-img">
+
+      <div class="morph__callouts" id="morph-callouts">
+        <svg class="morph__curves" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <path class="curve curve--c1" d="M 38 30 c -3 -2 -6 1 -3 3 c 3 2 4 -3 0 -3 C 20 28 -2 22 -6 14" />
+          <path class="curve curve--c2" d="M 62 28 c 3 -2 6 1 3 3 c -3 2 -4 -3 0 -3 C 80 26 100 22 106 14" />
+          <path class="curve curve--c3" d="M 65 72 c 3 2 6 -1 3 -3 c -3 -2 -4 3 0 3 C 82 74 100 80 106 86" />
+          <path class="curve curve--c4" d="M 32 65 c -3 2 -6 -1 -3 -3 c 3 -2 4 3 0 3 C 16 67 -2 78 -6 86" />
+        </svg>
+
+        <!-- Callout text is populated by recipe-page-data.js -->
+        <div class="callout c1" data-callout="1">
+          <span class="callout__dot"></span>
+          <span class="callout__label">
+            <span class="callout__no">01</span>
+            <span class="callout__name"></span>
+            <span class="callout__copy"></span>
+          </span>
+        </div>
+        <div class="callout c2" data-callout="2">
+          <span class="callout__dot"></span>
+          <span class="callout__label">
+            <span class="callout__no">02</span>
+            <span class="callout__name"></span>
+            <span class="callout__copy"></span>
+          </span>
+        </div>
+        <div class="callout c3" data-callout="3">
+          <span class="callout__dot"></span>
+          <span class="callout__label">
+            <span class="callout__no">03</span>
+            <span class="callout__name"></span>
+            <span class="callout__copy"></span>
+          </span>
+        </div>
+        <div class="callout c4" data-callout="4">
+          <span class="callout__dot"></span>
+          <span class="callout__label">
+            <span class="callout__no">04</span>
+            <span class="callout__name"></span>
+            <span class="callout__copy"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       HERO  (01)
+  ============================================================ -->
+  <section class="hero" id="hero" data-screen-label="01 Hero">
+    <div class="hero__grid">
+
+      <div class="hero__text-col">
+        <nav class="hero__crumbs" aria-label="Breadcrumb">
+          <a href="recipes.html">Recipes</a>
+          <span class="hero__crumb-sep">/</span>
+          <a href="#">Category</a>
+          <span class="hero__crumb-sep">/</span>
+          <span>Loading…</span>
+        </nav>
+
+        <p class="hero__eyebrow">a meal worth romanticizing · no. 001</p>
+
+        <h1 class="hero__headline">
+          <span class="hero__pre">loading</span>
+          <span class="hero__big">Recipe</span>
+        </h1>
+
+        <p class="hero__lede">
+          Loading recipe details…
+        </p>
+
+        <ul class="hero__meta" role="list">
+          <li class="meta-chip">
+            <span class="meta-chip__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>
+              </svg>
+            </span>
+            <span class="meta-chip__body">
+              <span class="meta-chip__label">cook time</span>
+              <span class="meta-chip__value">—</span>
+            </span>
+          </li>
+          <li class="meta-chip">
+            <span class="meta-chip__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M12 3c2 3 3 5 3 7a3 3 0 1 1-6 0c0-2 1-4 3-7Z"/>
+                <path d="M5 14c2 2 4 7 7 7s5-5 7-7"/>
+              </svg>
+            </span>
+            <span class="meta-chip__body">
+              <span class="meta-chip__label">calories</span>
+              <span class="meta-chip__value">—</span>
+            </span>
+          </li>
+          <li class="meta-chip">
+            <span class="meta-chip__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="12" cy="8" r="3"/>
+                <path d="M5 21c0-4 3-7 7-7s7 3 7 7"/>
+              </svg>
+            </span>
+            <span class="meta-chip__body">
+              <span class="meta-chip__label">serves</span>
+              <span class="meta-chip__value" id="hero-serves">—</span>
+            </span>
+          </li>
+          <li class="meta-chip">
+            <span class="meta-chip__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M5 12h14M5 7h14M5 17h14"/>
+              </svg>
+            </span>
+            <span class="meta-chip__body">
+              <span class="meta-chip__label">level</span>
+              <span class="meta-chip__value">—</span>
+            </span>
+          </li>
+        </ul>
+
+        <div class="hero__tags">
+          <!-- Tags populated by recipe-page-data.js -->
+        </div>
+
+        <div class="hero__scroll-hint">
+          <span class="hero__scroll-text">scroll to read the plate</span>
+          <span class="hero__scroll-arrow" aria-hidden="true"></span>
+        </div>
+      </div>
+
+      <div class="hero__photo-col" aria-hidden="true"></div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       BENEFITS  (02)
+  ============================================================ -->
+  <section class="benefits" id="benefits" data-screen-label="02 Benefits">
+    <div class="benefits__inner">
+
+      <header class="benefits__header">
+        <p class="benefits__kicker">02 — what's on the plate</p>
+        <h2 class="benefits__heading">Four quiet things<br>working in your favour.</h2>
+        <p class="benefits__lede"></p>
+      </header>
+
+      <div class="benefits__diagram" id="benefits-diagram" aria-hidden="true">
+        <span class="benefits__diagram-tag">fig. 02 · the plate, annotated</span>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       INGREDIENTS  (03)
+  ============================================================ -->
+  <section class="ingreds" id="ingreds" data-screen-label="03 Ingredients">
+    <div class="ingreds__pin" id="ingreds-pin">
+      <div class="ingreds__sticky">
+        <div class="ingreds__head">
+
+          <div class="ingreds__head-left">
+            <div class="ingreds__head-text">
+              <p class="ingreds__kicker">03 — the shopping list</p>
+              <h2 class="ingreds__heading">Your ingredients,<br>one bag.</h2>
+              <p class="ingreds__lede">
+                Adjust servings on the receipt — we'll keep the maths.
+              </p>
+            </div>
+
+            <div class="ingreds__stage" id="ingreds-stage">
+
+              <!-- Populated by recipe-page-data.js -->
+              <div class="ingreds__row" id="ingreds-row">
+                <p class="recipe-grid__loading" style="padding:1rem 0;">Loading ingredients…</p>
+              </div>
+
+              <div class="cart" id="cart" aria-hidden="true">
+                <img src="../Brand essentials/shopping-cart.jpg" alt="" class="cart__img">
+                <div class="cart__count" id="cart-count">0<span class="cart__count-of">/0</span></div>
+              </div>
+
+            </div>
+          </div>
+
+          <aside class="receipt" id="receipt" aria-label="Shopping list receipt">
+
+            <div class="receipt__top">
+              <div class="receipt__brand">MEALS &nbsp;·&nbsp; receipt</div>
+              <div class="receipt__no">no. 00001</div>
+            </div>
+
+            <!-- Receipt title + sub populated by recipe-page-data.js -->
+            <div class="receipt__title">loading<br>recipe</div>
+            <div class="receipt__sub">a weeknight plate · ready soon</div>
+
+            <div class="receipt__servings">
+              <span class="receipt__servings-label">servings</span>
+              <div class="receipt__servings-control">
+                <button class="receipt__step" data-step="-1" aria-label="Decrease servings">−</button>
+                <span class="receipt__servings-value" id="servings-value">2</span>
+                <button class="receipt__step" data-step="1"  aria-label="Increase servings">+</button>
+              </div>
+            </div>
+
+            <div class="receipt__divider"></div>
+            <ul class="receipt__lines" id="receipt-lines" role="list"></ul>
+            <div class="receipt__divider"></div>
+
+            <div class="receipt__totals">
+              <div class="receipt__total-row">
+                <span>items</span>
+                <span id="receipt-count">0</span>
+              </div>
+              <div class="receipt__total-row">
+                <span>est. pantry cost</span>
+                <span id="receipt-cost">$0.00</span>
+              </div>
+              <div class="receipt__total-row receipt__total-row--big">
+                <span>cook time</span>
+                <span>—</span>
+              </div>
+            </div>
+
+            <div class="receipt__foot">
+              <div class="receipt__barcode">||| | || ||||| ||| | |||| || | |||||</div>
+              <div class="receipt__thanks">— thank you, eat well —</div>
+            </div>
+
+          </aside>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       SOURCE / ORIGINAL RECIPE  (04)
+  ============================================================ -->
+  <section class="source" id="source" data-screen-label="04 Source">
+    <div class="source__inner">
+
+      <p class="source__kicker">04 — credit where it's due</p>
+      <h2 class="source__heading">We didn't write this one.</h2>
+      <p class="source__lede"></p>
+
+      <div class="source__card">
+        <div class="source__attrib">
+          <div class="source__avatar" aria-hidden="true"><span>??</span></div>
+          <div class="source__attrib-body">
+            <span class="source__attrib-label">recipe by</span>
+            <span class="source__attrib-name"></span>
+            <span class="source__attrib-meta"></span>
+          </div>
+        </div>
+        <a class="source__btn" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="source__btn-label">view the original recipe</span>
+          <span class="source__btn-arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+
+      <p class="source__fineprint">
+        Every recipe on MEALS links back to the original creator. We're a kitchen index,
+        not a cookbook — go read the original, leave them a comment, and tell them we sent you.
+      </p>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="rp-footer">
+    <div class="rp-footer__inner">
+      <div class="rp-footer__top">
+
+        <div class="rp-footer__brand">
+          <img src="../Brand essentials/dark-mode-logo.png" alt="MEALS" class="rp-footer__logo">
+          <p class="rp-footer__tag">A kitchen index for people who actually cook.<br>One plate at a time, no nonsense.</p>
+          <div class="rp-footer__seal" aria-hidden="true">
+            <span class="rp-footer__seal-mark">M</span>
+          </div>
+        </div>
+
+        <div class="rp-footer__cols">
+          <div class="rp-footer__col">
+            <h4>browse</h4>
+            <a href="breakfast.html">Breakfast</a>
+            <a href="lunch.html">Lunch</a>
+            <a href="dinner.html">Dinner</a>
+            <a href="snack.html">Snacks</a>
+            <a href="meal-prep.html">Meal prep</a>
+          </div>
+          <div class="rp-footer__col">
+            <h4>kitchen</h4>
+            <a href="#">Pantry guides</a>
+            <a href="#">Seasonal index</a>
+            <a href="#">Tools we use</a>
+            <a href="#">Submit a recipe</a>
+          </div>
+          <div class="rp-footer__col">
+            <h4>the index</h4>
+            <a href="#">About</a>
+            <a href="#">Our cooks</a>
+            <a href="#">Newsletter</a>
+            <a href="#">Contact</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="rp-footer__bottom">
+        <span>© 2026 MEALS — a kitchen index.</span>
+        <span class="rp-footer__sep">·</span>
+        <span>recipes belong to their original authors.</span>
+        <span class="rp-footer__spacer"></span>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">RSS</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- SVG filter: removes white backgrounds from plate images -->
+  <svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="remove-white" x="0%" y="0%" width="100%" height="100%"
+              color-interpolation-filters="sRGB">
+        <feColorMatrix type="matrix"
+          values="1 0 0 0 0
+                  0 1 0 0 0
+                  0 0 1 0 0
+                 -1 -1 -1 0 3"/>
+        <feComponentTransfer>
+          <feFuncA type="linear" slope="6" intercept="-1"/>
+        </feComponentTransfer>
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- Accent / callout style token -->
+  <script>window.__TWEAKS__ = { calloutStyle: 'diagram', accent: 'gold' };</script>
+
+  <!-- ① Sanity client (fetch + image URL helpers) -->
+  <script src="../js/sanity-client.js"></script>
+
+  <!-- ② recipe-page.js — exposed as initRecipePage(), called by recipe-page-data.js -->
+  <script>window.__SANITY_RECIPE__ = true;</script>
+  <script src="../recipe-page.js"></script>
+
+  <!-- ③ Fetch recipe data + populate DOM + call initRecipePage() -->
+  <script src="../js/recipe-page-data.js"></script>
+
+  <!-- Hamburger menu -->
+  <script>
+    (function () {
+      var btn   = document.getElementById('navbar-hamburger');
+      var links = document.getElementById('navbar-links');
+      btn.addEventListener('click', function () {
+        var open = links.classList.toggle('navbar__links--open');
+        btn.setAttribute('aria-expanded', String(open));
+      });
+      links.querySelectorAll('.navbar__link').forEach(function (a) {
+        a.addEventListener('click', function () {
+          links.classList.remove('navbar__links--open');
+          btn.setAttribute('aria-expanded', 'false');
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>

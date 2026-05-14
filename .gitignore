@@ -1,0 +1,26 @@
+# Sanity Studio build outputs & dependencies
+studio/node_modules/
+studio/.sanity/
+studio/dist/
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor folders
+.vscode/
+.idea/
+
+# Old versions folder (content moved to root)
+versions/
+
+# Claude Code local settings (personal, not for the repo)
+.claude/
+
+# Working / design files (not part of the live site)
+Hand off/
+check/
+inpos/
+references/
+test blog assets/

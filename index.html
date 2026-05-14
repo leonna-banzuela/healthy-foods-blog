@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEALS – Recipes Worth Romanticizing</title>
+
+  <!-- Google Fonts: Lora (serif H1) + Commissioner (sans body/H2) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Commissioner:wght@300;400;600;700&family=Lobster&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ============================================================
+       NAVBAR
+       Logo: left | Links: right | Sticky cream bar
+  ============================================================ -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar__inner">
+
+      <a href="/" class="navbar__logo-link" aria-label="MEALS – go to homepage">
+        <img
+          src="Brand essentials/light-mode-logo.png"
+          alt="MEALS"
+          class="navbar__logo-img"
+        >
+      </a>
+
+      <!-- Mobile hamburger toggle -->
+      <button
+        class="navbar__hamburger"
+        id="navbar-hamburger"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="navbar-links"
+      >
+        <span class="navbar__hamburger-bar"></span>
+        <span class="navbar__hamburger-bar"></span>
+        <span class="navbar__hamburger-bar"></span>
+      </button>
+
+      <!-- Primary nav links -->
+      <ul class="navbar__links" id="navbar-links" role="list">
+        <li><a href="#hero"    class="navbar__link navbar__link--active">Home</a></li>
+        <li><a href="#recipes" class="navbar__link">Recipes</a></li>
+        <li><a href="#about"   class="navbar__link">About</a></li>
+        <li><a href="#contact" class="navbar__link">Contact</a></li>
+      </ul>
+
+    </div>
+  </nav>
+
+
+  <!-- ============================================================
+       HERO SECTION
+       Text sits at top (z-index 1). Plates are absolutely positioned
+       at the bottom (z-index 3) and bleed in front of the headline.
+       Shadow (z-index 2) sits between text and plates.
+  ============================================================ -->
+  <section class="hero" id="hero">
+
+    <!-- Eyebrow + headline — plates overlap these from below -->
+    <div class="hero__content">
+      <p  class="hero__eyebrow">meals worth</p>
+      <h1 class="hero__headline">ROMANTICIZING</h1>
+    </div>
+
+    <!-- Dark gradient that sits between text (z1) and plates (z3) -->
+    <div class="hero__plate-shadow" aria-hidden="true"></div>
+
+    <!-- Five spinning plates — absolutely pinned to the bottom,
+         only top half visible, bleed past the hero edges -->
+    <div class="hero__plates-row" aria-hidden="true">
+
+      <div class="hero__plate-item hero__plate-item--1">
+        <img src="Brand essentials/hero-section-plates/1.png" alt="" class="hero__plate-img">
+      </div>
+      <div class="hero__plate-item hero__plate-item--2">
+        <img src="Brand essentials/hero-section-plates/2.png" alt="" class="hero__plate-img">
+      </div>
+      <div class="hero__plate-item hero__plate-item--3">
+        <img src="Brand essentials/hero-section-plates/3.png" alt="" class="hero__plate-img">
+      </div>
+      <div class="hero__plate-item hero__plate-item--4">
+        <img src="Brand essentials/hero-section-plates/4.png" alt="" class="hero__plate-img">
+      </div>
+      <div class="hero__plate-item hero__plate-item--5">
+        <img src="Brand essentials/hero-section-plates/5.png" alt="" class="hero__plate-img">
+      </div>
+
+    </div><!-- /.hero__plates-row -->
+
+  </section><!-- /#hero -->
+
+
+  <!-- ============================================================
+       HERO CTA
+       First element of the cream section below the hero.
+  ============================================================ -->
+  <section class="hero-cta" id="recipes">
+    <a href="#recipes" class="hero-cta__btn">Browse Recipes</a>
+  </section>
+
+
+  <!-- ============================================================
+       FAVES SECTION
+       Sideways-scrolling carousel of popular recipe cards.
+  ============================================================ -->
+  <section class="faves" id="faves">
+
+    <div class="faves__intro">
+      <h2 class="faves__heading">all time faves</h2>
+      <p class="faves__subheading">you can never go wrong with these selections~</p>
+    </div>
+
+    <div class="faves__stage" id="faves-stage">
+
+      <!-- Edge gradient fades -->
+      <div class="faves__fade faves__fade--left"  aria-hidden="true"></div>
+      <div class="faves__fade faves__fade--right" aria-hidden="true"></div>
+
+      <!-- Cork buttons, floating on top of fades -->
+      <button class="faves__nav faves__nav--prev" id="faves-prev" aria-label="Previous recipe">&#8592;</button>
+      <button class="faves__nav faves__nav--next" id="faves-next" aria-label="Next recipe">&#8594;</button>
+
+      <!-- Cards injected by js/homepage.js from Sanity -->
+      <div class="faves__deck" id="faves-deck">
+        <p style="color:#fff;text-align:center;padding:3rem 1rem;font-family:Commissioner,sans-serif;opacity:.6;">
+          Loading recipes…
+        </p>
+      </div><!-- /#faves-deck -->
+
+    </div><!-- /.faves__stage -->
+
+  </section><!-- /#faves -->
+
+
+  <!-- ============================================================
+       SEARCH AND EXPLORE SECTION
+       Navy panel after the faves carousel.
+       Layout: 3-col grid — card top-left, search+filters spans
+       top-right (2 cols), remaining category cards auto-fill rows.
+  ============================================================ -->
+  <section class="explore" id="explore">
+    <div class="explore__inner">
+
+      <!-- Full-width heading: hidden at desktop, shown at medium & below -->
+      <h2 class="explore__heading explore__heading--above">Search and Explore</h2>
+
+      <div class="explore__grid">
+
+        <!-- ── Card 1: Breakfast (top-left, row 1 col 1) ── -->
+        <article class="cat-card" data-category="breakfast" onclick="location.href='pages/breakfast.html'">
+          <div class="cat-card__body">
+            <span class="cat-card__label">breakfast</span>
+            <a class="cat-card__btn" href="pages/breakfast.html" aria-label="View breakfast recipes">view &gt;</a>
+          </div>
+          <div class="cat-card__img-wrap">
+            <img src="Brand essentials/hero-section-plates/1.png" alt="" class="cat-card__img">
+          </div>
+        </article>
+
+        <!-- ── Search + Filters (row 1, spans cols 2–3) ── -->
+        <div class="explore__search-wrap">
+
+          <h2 class="explore__heading explore__heading--inline">Search and Explore</h2>
+
+          <div class="explore__searchbar">
+            <svg class="explore__search-icon" width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
+              <circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M11 11l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+            <input
+              type="text"
+              class="explore__input"
+              placeholder="Search for a recipe..."
+              aria-label="Search recipes"
+            >
+          </div>
+
+          <div class="explore__filters" role="group" aria-label="Filter recipes">
+
+            <div class="filter-drop" data-filter="ingredients">
+              <button class="filter-drop__btn" aria-haspopup="true" aria-expanded="false">
+                Ingredients <span class="filter-drop__arrow" aria-hidden="true">▾</span>
+              </button>
+              <div class="filter-drop__panel">
+                <p class="filter-drop__placeholder">Coming soon</p>
+              </div>
+            </div>
+
+            <div class="filter-drop" data-filter="calories">
+              <button class="filter-drop__btn" aria-haspopup="true" aria-expanded="false">
+                Calories <span class="filter-drop__arrow" aria-hidden="true">▾</span>
+              </button>
+              <div class="filter-drop__panel">
+                <p class="filter-drop__placeholder">Coming soon</p>
+              </div>
+            </div>
+
+            <div class="filter-drop" data-filter="protein">
+              <button class="filter-drop__btn" aria-haspopup="true" aria-expanded="false">
+                Protein <span class="filter-drop__arrow" aria-hidden="true">▾</span>
+              </button>
+              <div class="filter-drop__panel">
+                <p class="filter-drop__placeholder">Coming soon</p>
+              </div>
+            </div>
+
+            <div class="filter-drop" data-filter="vegetarian">
+              <button class="filter-drop__btn" aria-haspopup="true" aria-expanded="false">
+                Vegetarian <span class="filter-drop__arrow" aria-hidden="true">▾</span>
+              </button>
+              <div class="filter-drop__panel">
+                <p class="filter-drop__placeholder">Coming soon</p>
+              </div>
+            </div>
+
+            <div class="filter-drop" data-filter="vegan">
+              <button class="filter-drop__btn" aria-haspopup="true" aria-expanded="false">
+                Vegan <span class="filter-drop__arrow" aria-hidden="true">▾</span>
+              </button>
+              <div class="filter-drop__panel">
+                <p class="filter-drop__placeholder">Coming soon</p>
+              </div>
+            </div>
+
+          </div><!-- /.explore__filters -->
+        </div><!-- /.explore__search-wrap -->
+
+        <!-- ── Card 2: Lunch ── -->
+        <article class="cat-card" data-category="lunch" onclick="location.href='pages/lunch.html'">
+          <div class="cat-card__body">
+            <span class="cat-card__label">lunch</span>
+            <a class="cat-card__btn" href="pages/lunch.html" aria-label="View lunch recipes">view &gt;</a>
+          </div>
+          <div class="cat-card__img-wrap">
+            <img src="Brand essentials/hero-section-plates/2.png" alt="" class="cat-card__img">
+          </div>
+        </article>
+
+        <!-- ── Card 3: Dinner ── -->
+        <article class="cat-card" data-category="dinner" onclick="location.href='pages/dinner.html'">
+          <div class="cat-card__body">
+            <span class="cat-card__label">dinner</span>
+            <a class="cat-card__btn" href="pages/dinner.html" aria-label="View dinner recipes">view &gt;</a>
+          </div>
+          <div class="cat-card__img-wrap">
+            <img src="Brand essentials/hero-section-plates/3.png" alt="" class="cat-card__img">
+          </div>
+        </article>
+
+        <!-- ── Card 4: Snack ── -->
+        <article class="cat-card" data-category="snack" onclick="location.href='pages/snack.html'">
+          <div class="cat-card__body">
+            <span class="cat-card__label">snack</span>
+            <a class="cat-card__btn" href="pages/snack.html" aria-label="View snack recipes">view &gt;</a>
+          </div>
+          <div class="cat-card__img-wrap">
+            <img src="Brand essentials/hero-section-plates/4.png" alt="" class="cat-card__img">
+          </div>
+        </article>
+
+        <!-- ── Card 5: Surprise Me ── -->
+        <article class="cat-card" data-category="surprise">
+          <div class="cat-card__body">
+            <span class="cat-card__label">surprise me</span>
+            <button class="cat-card__btn" aria-label="View surprise recipes">view &gt;</button>
+          </div>
+          <div class="cat-card__img-wrap">
+            <img src="Brand essentials/hero-section-plates/5.png" alt="" class="cat-card__img">
+          </div>
+        </article>
+
+        <!-- ── Card 6: Quick & Easy ── -->
+        <article class="cat-card" data-category="quick" onclick="location.href='pages/quick-easy.html'">
+          <div class="cat-card__body">
+            <span class="cat-card__label">quick &amp; easy</span>
+            <a class="cat-card__btn" href="pages/quick-easy.html" aria-label="View quick and easy recipes">view &gt;</a>
+          </div>
+          <div class="cat-card__img-wrap">
+            <img src="Brand essentials/hero-section-plates/1.png" alt="" class="cat-card__img">
+          </div>
+        </article>
+
+        <!-- ── Card 7: Meal Prep ── -->
+        <article class="cat-card" data-category="meal-prep" onclick="location.href='pages/meal-prep.html'">
+          <div class="cat-card__body">
+            <span class="cat-card__label">meal prep</span>
+            <a class="cat-card__btn" href="pages/meal-prep.html" aria-label="View meal prep recipes">view &gt;</a>
+          </div>
+          <div class="cat-card__img-wrap">
+            <img src="Brand essentials/hero-section-plates/2.png" alt="" class="cat-card__img">
+          </div>
+        </article>
+
+      </div><!-- /.explore__grid -->
+    </div><!-- /.explore__inner -->
+  </section><!-- /#explore -->
+
+
+  <!-- Sanity client + homepage carousel (carousel init moved to homepage.js) -->
+  <script src="js/sanity-client.js"></script>
+  <script src="js/homepage.js"></script>
+
+  <!-- ============================================================
+       SCRIPT – mobile hamburger, filter dropdowns, category cards
+  ============================================================ -->
+  <script>
+    const hamburgerBtn = document.getElementById('navbar-hamburger');
+    const navLinksList  = document.getElementById('navbar-links');
+
+    hamburgerBtn.addEventListener('click', () => {
+      const isOpen = navLinksList.classList.toggle('navbar__links--open');
+      hamburgerBtn.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    navLinksList.querySelectorAll('.navbar__link').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinksList.classList.remove('navbar__links--open');
+        hamburgerBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // ── Filter dropdowns ──
+    (function () {
+      const drops = document.querySelectorAll('.filter-drop');
+
+      drops.forEach(drop => {
+        const btn = drop.querySelector('.filter-drop__btn');
+
+        btn.addEventListener('click', e => {
+          e.stopPropagation();
+          const isOpen = drop.classList.contains('filter-drop--open');
+
+          // Close every dropdown first
+          drops.forEach(d => {
+            d.classList.remove('filter-drop--open');
+            d.querySelector('.filter-drop__btn').setAttribute('aria-expanded', 'false');
+          });
+
+          // Re-open this one only if it was closed
+          if (!isOpen) {
+            drop.classList.add('filter-drop--open');
+            btn.setAttribute('aria-expanded', 'true');
+          }
+        });
+      });
+
+      // Close all when clicking anywhere else on the page
+      document.addEventListener('click', () => {
+        drops.forEach(d => {
+          d.classList.remove('filter-drop--open');
+          d.querySelector('.filter-drop__btn').setAttribute('aria-expanded', 'false');
+        });
+      });
+    })();
+
+    // ── Category card click → toggle selected state ──
+    (function () {
+      const cards = document.querySelectorAll('.cat-card');
+
+      cards.forEach(card => {
+        // Intercept "view >" button so it doesn't bubble oddly
+        const btn = card.querySelector('.cat-card__btn');
+        btn.addEventListener('click', e => e.stopPropagation());
+        btn.addEventListener('click', () => {
+          // Same toggle behaviour as clicking the card
+          const wasSelected = card.classList.contains('cat-card--selected');
+          cards.forEach(c => c.classList.remove('cat-card--selected'));
+          if (!wasSelected) card.classList.add('cat-card--selected');
+        });
+
+        card.addEventListener('click', () => {
+          const wasSelected = card.classList.contains('cat-card--selected');
+          cards.forEach(c => c.classList.remove('cat-card--selected'));
+          if (!wasSelected) card.classList.add('cat-card--selected');
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>
