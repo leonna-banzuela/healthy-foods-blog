@@ -8,7 +8,7 @@ export default defineConfig({
   title: 'Healthy Foods Blog',
 
   // ─── STEP: After running `sanity init`, paste your project ID below ───
-  projectId: 'YOUR_PROJECT_ID',
+  projectId: '7kenz4it',
   dataset: 'production',
 
   plugins: [

@@ -5,7 +5,7 @@
    Also set the same ID in studio/sanity.config.js line 9.
    ================================================================ */
 
-const SANITY_PROJECT_ID = 'YOUR_PROJECT_ID';
+const SANITY_PROJECT_ID = '7kenz4it';
 const SANITY_DATASET    = 'production';
 const SANITY_API_VER    = '2024-01-01';
 
