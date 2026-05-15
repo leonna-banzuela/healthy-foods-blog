@@ -1298,7 +1298,6 @@ body[data-callout-style="pills"] .callout__dot::after    { display: none; }
   :root { --plate-size: min(72vw, 420px); }
 
   .hero__grid,
-  .ingreds__head,
   .rp-footer__top { grid-template-columns: 1fr; gap: 32px; }
 
   .hero__photo-col { min-height: 60vh; }
@@ -1309,10 +1308,27 @@ body[data-callout-style="pills"] .callout__dot::after    { display: none; }
   .callout__name  { font-size: 13px; }
   .callout__copy  { font-size: 11px; }
 
-  .receipt { max-width: 100%; margin: 0 auto; }
+  /* ── Ingredients section: receipt above, cart stage below ── */
+  .ingreds__head {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px var(--pad) 16px;
+  }
 
-  .ingreds__pin    { height: 260vh; }
-  .ingreds__sticky { min-height: auto; padding: 40px 0; }
+  /* Receipt floats to the top, capped in height so the cart stage
+     is always visible below it in the same sticky frame */
+  .receipt {
+    order: -1;
+    max-width: 100%;
+    max-height: 42vh;
+    overflow-y: auto;
+  }
+
+  .ingreds__head-left { order: 1; }
+
+  .ingreds__pin    { height: 280vh; }
+  .ingreds__sticky { min-height: auto; padding: 0; }
 
   .ingred { width: 64px; height: 64px; margin-left: -10px; }
   .cart   { width: 140px; height: 112px; }
