@@ -171,7 +171,8 @@ function initRecipePage() {
   const cartCnt = document.getElementById('cart-count');
   const receipt = document.getElementById('receipt');
 
-  let collected = -1;
+  let collected     = -1;
+  let cartFirstPaint = true;
 
   function refreshReceiptHighlight() {
     linesEl.querySelectorAll('.receipt__line').forEach((li, i) => {
@@ -200,11 +201,12 @@ function initRecipePage() {
     const scrolled = Math.max(0, -pinRect.top);
     const p = clamp01(travel > 0 ? scrolled / travel : 0);
 
-    /* Cart starts fully off-screen to the left so it never covers ingredients */
-    const startX = -(cart.offsetWidth + 32);
-
     const stageRect   = stage.getBoundingClientRect();
     const receiptRect = receipt.getBoundingClientRect();
+
+    /* Start just off the left edge of the viewport so the cart always
+       enters from outside the screen regardless of stage position */
+    const startX = -(cart.offsetWidth + stageRect.left + 20);
 
     /* Desktop: travel to just left of the receipt panel */
     let endX = receiptRect.left - stageRect.left - cart.offsetWidth - 24;
@@ -216,7 +218,23 @@ function initRecipePage() {
     }
 
     const cartX = lerp(startX, endX, easeInOutCubic(p));
-    cart.style.transform = 'translateX(' + cartX + 'px)';
+
+    /* On first paint: always sweep in from the left, even if the user
+       has already scrolled into the section (Sanity fetch timing) */
+    if (cartFirstPaint) {
+      cartFirstPaint = false;
+      cart.style.transition = '';
+      cart.style.transform  = 'translateX(' + startX + 'px)';
+      if (p > 0) {
+        requestAnimationFrame(function () {
+          cart.style.transition = 'transform 0.55s cubic-bezier(0.4,0,0.2,1)';
+          cart.style.transform  = 'translateX(' + cartX + 'px)';
+          setTimeout(function () { cart.style.transition = ''; }, 600);
+        });
+      }
+    } else {
+      cart.style.transform = 'translateX(' + cartX + 'px)';
+    }
 
     /* Collect ingredients as cart centre crosses each ingredient centre */
     const cartCenterX = cartX + cart.offsetWidth / 2;
