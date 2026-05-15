@@ -216,7 +216,7 @@ function initRecipePage() {
     }
 
     const cartX = lerp(startX, endX, easeInOutCubic(p));
-    cart.style.setProperty('--cart-x', cartX + 'px');
+    cart.style.transform = 'translateX(' + cartX + 'px)';
 
     /* Collect ingredients as cart centre crosses each ingredient centre */
     const cartCenterX = cartX + cart.offsetWidth / 2;

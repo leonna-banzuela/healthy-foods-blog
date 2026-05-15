@@ -686,7 +686,7 @@ html, body {
   height: 128px;
   z-index: 2;
   pointer-events: none;
-  transform: translateX(var(--cart-x, -200px));
+  transform: translateX(-9999px); /* JS overrides this via style.transform */
 }
 
 .cart {
