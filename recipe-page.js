@@ -196,17 +196,26 @@ function initRecipePage() {
     const navH    = parseInt(getComputedStyle(document.documentElement)
                       .getPropertyValue('--nav-height')) || 52;
 
-    const travel  = pin.offsetHeight - (vh - navH);
+    const travel   = pin.offsetHeight - (vh - navH);
     const scrolled = Math.max(0, -pinRect.top);
     const p = clamp01(travel > 0 ? scrolled / travel : 0);
 
-    /* Cart travels from stage left → just before the receipt */
+    /* Cart starts fully off-screen to the left so it never covers ingredients */
+    const startX = -(cart.offsetWidth + 32);
+
     const stageRect   = stage.getBoundingClientRect();
     const receiptRect = receipt.getBoundingClientRect();
-    const endX = Math.max(0,
-      receiptRect.left - stageRect.left - cart.offsetWidth - 24);
 
-    const cartX = endX * easeInOutCubic(p);
+    /* Desktop: travel to just left of the receipt panel */
+    let endX = receiptRect.left - stageRect.left - cart.offsetWidth - 24;
+
+    /* Mobile: receipt is stacked below (not to the right), so travel
+       across the visible stage width instead */
+    if (endX <= 0) {
+      endX = Math.max(stage.offsetWidth - cart.offsetWidth - 24, cart.offsetWidth);
+    }
+
+    const cartX = lerp(startX, endX, easeInOutCubic(p));
     cart.style.setProperty('--cart-x', cartX + 'px');
 
     /* Collect ingredients as cart centre crosses each ingredient centre */
