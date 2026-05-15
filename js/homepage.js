@@ -11,7 +11,7 @@
 
   const FAVES_QUERY = `
     *[_type == "recipe" && featuredInFaves == true]
-    | order(orderInFaves asc, _createdAt desc) {
+    | order(_createdAt desc) {
       _id, title, slug, photo,
       shortDescription, tags,
       cookingTime, calories, defaultServings

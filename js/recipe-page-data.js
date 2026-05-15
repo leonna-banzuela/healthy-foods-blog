@@ -1,4 +1,4 @@
-/* ================================================================
+﻿/* ================================================================
    MEALS — Recipe detail page: fetch from Sanity, populate DOM,
    then kick off the scroll/morph animations.
    Depends on: sanity-client.js (loaded first)
@@ -24,12 +24,9 @@
       calories,
       defaultServings,
       difficultyLevel,
-      recipeNumber,
-      breadcrumbCategory,
       heroHeadlinePre,
       heroLede,
       benefitsHeading,
-      benefitsLede,
       benefits[] { name, copy },
       ingredients[] {
         name,
@@ -38,12 +35,9 @@
         unit,
         estimatedCost
       },
-      receiptSub,
       sourceHeading,
-      sourceLede,
       sourceAuthorName,
       sourceAuthorInitials,
-      sourcePublishedMeta,
       sourceLink
     }
   `;
@@ -94,16 +88,8 @@ function populateRecipe(r) {
   const crumbLast = document.querySelector('.hero__crumbs span:last-child');
   if (crumbLast) crumbLast.textContent = r.title || '';
 
-  const crumbCatLink = document.querySelector('.hero__crumbs a:nth-child(2)');
-  if (crumbCatLink && r.breadcrumbCategory) {
-    crumbCatLink.textContent = r.breadcrumbCategory;
-    crumbCatLink.href = r.breadcrumbCategory.toLowerCase().replace(/\s+&?\s*/g, '-') + '.html';
-  }
-
   /* ── Hero eyebrow ── */
-  set('.hero__eyebrow',
-    `a meal worth romanticizing · no. ${r.recipeNumber || '001'}`
-  );
+  set('.hero__eyebrow', 'a meal worth romanticizing');
 
   /* ── Hero headline ── */
   set('.hero__pre', r.heroHeadlinePre || (r.title || '').toLowerCase());
@@ -138,7 +124,7 @@ function populateRecipe(r) {
 
   /* ── Benefits section ── */
   set('.benefits__heading', r.benefitsHeading || 'Four quiet things\nworking in your favour.');
-  set('.benefits__lede', r.benefitsLede || '');
+  set('.benefits__lede', '');
 
   if (r.benefits && r.benefits.length) {
     const callouts = document.querySelectorAll('.callout');
@@ -192,7 +178,7 @@ function populateRecipe(r) {
   }
 
   set('.receipt__sub',
-    r.receiptSub || `a weeknight plate · ready in ${r.cookingTime || '—'}`
+    "a weeknight plate · ready in " + (r.cookingTime || '--')
   );
 
   /* Receipt cook time total row */
@@ -213,9 +199,9 @@ function populateRecipe(r) {
 
   /* ── Source section ── */
   set('.source__heading', r.sourceHeading || "We didn’t write this one.");
-  set('.source__lede',    r.sourceLede || '');
+  set('.source__lede', "We're the bridge between you and recipes worth sharing. We give credit where it's due.");
   set('.source__attrib-name', r.sourceAuthorName || '');
-  set('.source__attrib-meta', r.sourcePublishedMeta || '');
+
 
   const avatarSpan = document.querySelector('.source__avatar span');
   if (avatarSpan) avatarSpan.textContent = r.sourceAuthorInitials || '??';

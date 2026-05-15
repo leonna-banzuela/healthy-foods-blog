@@ -51,10 +51,34 @@ export const recipe = defineType({
       group: 'card',
       name: 'tags',
       title: 'Labels / Tags',
-      description: 'e.g. vegan, easy, weeknight, high-protein, one-pan',
+      description: 'Select all that apply.',
       type: 'array',
       of: [{ type: 'string' }],
-      options: { layout: 'tags' },
+      options: {
+        layout: 'grid',
+        list: [
+          // Diet type
+          { title: 'Vegan',            value: 'vegan'            },
+          { title: 'Vegetarian',       value: 'vegetarian'       },
+          { title: 'Gluten-Free',      value: 'gluten-free'      },
+          { title: 'Dairy-Free',       value: 'dairy-free'       },
+          // Nutrition focus
+          { title: 'High-Protein',     value: 'high-protein'     },
+          { title: 'Low-Carb',         value: 'low-carb'         },
+          { title: 'High-Fibre',       value: 'high-fibre'       },
+          { title: 'Low-Cal',          value: 'low-cal'          },
+          // Prep style
+          { title: 'One-Pan',          value: 'one-pan'          },
+          { title: 'No-Cook',          value: 'no-cook'          },
+          { title: 'Make-Ahead',       value: 'make-ahead'       },
+          { title: 'Freezer-Friendly', value: 'freezer-friendly' },
+          // Occasion
+          { title: 'Date Night',       value: 'date-night'       },
+          { title: 'Family',           value: 'family'           },
+          { title: 'Meal Prep',        value: 'meal-prep'        },
+          { title: 'Budget-Friendly',  value: 'budget-friendly'  },
+        ],
+      },
     }),
     defineField({
       group: 'card',
@@ -117,34 +141,12 @@ export const recipe = defineType({
       group: 'categories',
       name: 'featuredInFaves',
       title: 'Feature in "All Time Faves" Carousel',
-      description: 'Toggle ON to show this recipe in the homepage carousel.',
+      description: 'Toggle ON to show this recipe in the homepage carousel. Newest recipes appear first.',
       type: 'boolean',
       initialValue: false,
     }),
-    defineField({
-      group: 'categories',
-      name: 'orderInFaves',
-      title: 'Position in Faves Carousel',
-      description: 'Lower number = appears first. Only relevant when Featured in Faves is on.',
-      type: 'number',
-      initialValue: 99,
-    }),
 
     // ── RECIPE DETAIL PAGE ────────────────────────────────────────────
-    defineField({
-      group: 'detail',
-      name: 'recipeNumber',
-      title: 'Recipe Number',
-      description: 'Shown as "no. 001" in the hero. Use 3 digits: 001, 002, etc.',
-      type: 'string',
-    }),
-    defineField({
-      group: 'detail',
-      name: 'breadcrumbCategory',
-      title: 'Breadcrumb Category',
-      description: 'Shown in the hero breadcrumb trail (e.g. Dinner, Breakfast).',
-      type: 'string',
-    }),
     defineField({
       group: 'detail',
       name: 'heroHeadlinePre',
@@ -168,13 +170,6 @@ export const recipe = defineType({
       title: 'Benefits Section Heading',
       type: 'string',
       initialValue: 'Four quiet things working in your favour.',
-    }),
-    defineField({
-      group: 'benefits',
-      name: 'benefitsLede',
-      title: 'Benefits Section Description',
-      type: 'text',
-      rows: 3,
     }),
     defineField({
       group: 'benefits',
@@ -245,13 +240,6 @@ export const recipe = defineType({
         },
       }],
     }),
-    defineField({
-      group: 'ingredients',
-      name: 'receiptSub',
-      title: 'Receipt Subtitle Line',
-      description: 'e.g. "a weeknight plate · ready in 30"',
-      type: 'string',
-    }),
 
     // ── SOURCE & CREDIT ───────────────────────────────────────────────
     defineField({
@@ -260,14 +248,6 @@ export const recipe = defineType({
       title: 'Source Section Heading',
       type: 'string',
       initialValue: "We didn't write this one.",
-    }),
-    defineField({
-      group: 'source',
-      name: 'sourceLede',
-      title: 'Source Attribution Paragraph',
-      description: 'Introduce who created this recipe and where it originally appeared.',
-      type: 'text',
-      rows: 3,
     }),
     defineField({
       group: 'source',
@@ -280,16 +260,9 @@ export const recipe = defineType({
       group: 'source',
       name: 'sourceAuthorInitials',
       title: 'Author Avatar Initials',
-      description: '2 characters shown in the avatar circle when no photo is available (e.g. HK).',
+      description: '2 characters shown in the avatar circle (e.g. HK).',
       type: 'string',
       validation: Rule => Rule.max(2),
-    }),
-    defineField({
-      group: 'source',
-      name: 'sourcePublishedMeta',
-      title: 'Published Meta',
-      description: 'e.g. "published Jan 2024 · 8 min read"',
-      type: 'string',
     }),
     defineField({
       group: 'source',
