@@ -30,7 +30,7 @@
       benefits[] { name, copy },
       ingredients[] {
         name,
-        photo,
+        "photoRef": photo.asset._ref,
         baseQuantity,
         unit,
         estimatedCost
@@ -145,8 +145,8 @@ function populateRecipe(r) {
   if (ingRedsRow && ingredients.length) {
     ingRedsRow.innerHTML = ingredients.map(ing => {
       const id    = (ing.name || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-      const photo = ing.photo && ing.photo.asset && ing.photo.asset._ref
-        ? sanityImageUrl(ing.photo.asset._ref, 200)
+      const photo = ing.photoRef
+        ? sanityImageUrl(ing.photoRef, 200)
         : '';
       const imgTag = photo
         ? `<img class="ingred__img" src="${photo}" alt="${escHtml(ing.name || '')}">`
