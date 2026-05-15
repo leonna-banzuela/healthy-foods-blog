@@ -29,6 +29,7 @@ export default defineConfig({
               .child(
                 S.documentList()
                   .title('All Time Faves')
+                  .apiVersion('2024-01-01')
                   .filter('_type == "recipe" && featuredInFaves == true')
                   .defaultOrdering([{ field: 'orderInFaves', direction: 'asc' }])
               ),
@@ -40,6 +41,7 @@ export default defineConfig({
               .child(
                 S.documentList()
                   .title('Breakfast')
+                  .apiVersion('2024-01-01')
                   .filter('_type == "recipe" && "breakfast" in categories')
               ),
             S.listItem()
@@ -47,6 +49,7 @@ export default defineConfig({
               .child(
                 S.documentList()
                   .title('Lunch')
+                  .apiVersion('2024-01-01')
                   .filter('_type == "recipe" && "lunch" in categories')
               ),
             S.listItem()
@@ -54,6 +57,7 @@ export default defineConfig({
               .child(
                 S.documentList()
                   .title('Dinner')
+                  .apiVersion('2024-01-01')
                   .filter('_type == "recipe" && "dinner" in categories')
               ),
             S.listItem()
@@ -61,6 +65,7 @@ export default defineConfig({
               .child(
                 S.documentList()
                   .title('Snack')
+                  .apiVersion('2024-01-01')
                   .filter('_type == "recipe" && "snack" in categories')
               ),
             S.listItem()
@@ -68,6 +73,7 @@ export default defineConfig({
               .child(
                 S.documentList()
                   .title('Quick & Easy')
+                  .apiVersion('2024-01-01')
                   .filter('_type == "recipe" && "quick-easy" in categories')
               ),
             S.listItem()
@@ -75,6 +81,7 @@ export default defineConfig({
               .child(
                 S.documentList()
                   .title('Meal Prep')
+                  .apiVersion('2024-01-01')
                   .filter('_type == "recipe" && "meal-prep" in categories')
               ),
           ]),
