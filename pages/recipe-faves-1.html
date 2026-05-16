@@ -56,7 +56,8 @@
       <!-- Benefit callouts — four curved connectors + label boxes -->
       <div class="morph__callouts" id="morph-callouts">
 
-        <svg class="morph__curves" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <!-- Desktop: lines extend off-plate to side labels -->
+        <svg class="morph__curves morph__curves--desktop" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
           <!-- 01 top-left: curl inside plate, line extends to upper-left label -->
           <path class="curve curve--c1" d="M 38 30
             c -3 -2  -6 1  -3 3
@@ -77,6 +78,13 @@
             c -3 2  -6 -1  -3 -3
             c 3 -2  4 3  0 3
             C 16 67  -2 78  -6 86" />
+        </svg>
+        <!-- Mobile: lines curve to corner labels inside the plate -->
+        <svg class="morph__curves morph__curves--mobile" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <path class="curve curve--c1" d="M 38 30 c -3 -2 -6 1 -3 3 c 3 2 4 -3 0 -3 C 22 28 10 18 5 12" />
+          <path class="curve curve--c2" d="M 62 28 c 3 -2 6 1 3 3 c -3 2 -4 -3 0 -3 C 78 26 90 18 95 12" />
+          <path class="curve curve--c3" d="M 65 72 c 3 2 6 -1 3 -3 c -3 -2 -4 3 0 3 C 80 74 90 82 95 88" />
+          <path class="curve curve--c4" d="M 32 65 c -3 2 -6 -1 -3 -3 c 3 -2 4 3 0 3 C 18 67 10 78 5 88" />
         </svg>
 
         <div class="callout c1" data-callout="1">

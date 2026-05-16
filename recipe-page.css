@@ -331,6 +331,9 @@ html, body {
   100% { transform: scale(1.6); opacity: 0;  }
 }
 
+/* Mobile SVG hidden by default; desktop SVG always shown */
+.morph__curves--mobile { display: none; }
+
 /* Single SVG draws all four curved connectors */
 .morph__curves {
   position: absolute;
@@ -1355,6 +1358,10 @@ body[data-callout-style="pills"] .callout__dot::after    { display: none; }
 @media (max-width: 560px) {
   .hero__big { font-size: 14vw; }
   .rp-footer__cols { grid-template-columns: 1fr; }
+
+  /* Swap connector SVGs: hide desktop paths, show mobile paths */
+  .morph__curves--desktop { display: none; }
+  .morph__curves--mobile  { display: block; }
 
   /* ── Callout labels: move inside the plate as corner overlays ── */
   /* Reposition anchor points to plate corners (0–100% space) */
