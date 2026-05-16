@@ -1355,4 +1355,42 @@ body[data-callout-style="pills"] .callout__dot::after    { display: none; }
 @media (max-width: 560px) {
   .hero__big { font-size: 14vw; }
   .rp-footer__cols { grid-template-columns: 1fr; }
+
+  /* ── Callout labels: move inside the plate as corner overlays ── */
+  /* Reposition anchor points to plate corners (0–100% space) */
+  .c1 { --lx: 5%;  --ly: 12%; }
+  .c2 { --lx: 95%; --ly: 12%; }
+  .c3 { --lx: 95%; --ly: 88%; }
+  .c4 { --lx: 5%;  --ly: 88%; }
+
+  /* All labels: narrower, left-anchored by default */
+  .callout__label {
+    width: 110px;
+    padding: 6px 10px;
+    text-align: left;
+    border-left: 1px solid rgba(237,206,105,.55);
+    border-right: none;
+    transform: translate(0, -50%);
+  }
+
+  /* c2/c3 live in right corners → anchor from right edge */
+  .c2 .callout__label,
+  .c3 .callout__label {
+    text-align: right;
+    border-left: none;
+    border-right: 1px solid rgba(237,206,105,.55);
+    transform: translate(-100%, -50%);
+  }
+
+  /* Tick: left side for left-corner labels */
+  .callout__label::before { left: 0; right: auto; }
+
+  /* Tick: right side for right-corner labels */
+  .c2 .callout__label::before,
+  .c3 .callout__label::before { left: auto; right: 0; }
+
+  /* Slightly smaller text in tight overlay boxes */
+  .callout__no   { font-size: 13px; }
+  .callout__name { font-size: 11px; }
+  .callout__copy { font-size: 9px;  }
 }
