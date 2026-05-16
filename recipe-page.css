@@ -549,13 +549,16 @@ html, body {
   display: grid;
   grid-template-columns: 1fr 380px;
   gap: 48px;
-  align-items: stretch;
+  align-items: start;
+  overflow: hidden;
   /* Same GPU-layer backdrop fix as .ingreds__sticky: z-index on a positioned
      element can also trigger compositing layer promotion in Chrome. */
   background: var(--cream);
 }
 
 .ingreds__head-left {
+  grid-column: 1;
+  grid-row: 1;
   display: flex;
   flex-direction: column;
   min-width: 0;
@@ -591,10 +594,18 @@ html, body {
   max-width: 480px;
 }
 
+/* Section intro: sits before the sticky frame in the DOM so it scrolls
+   off naturally as the sticky receipt + cart animation locks into place. */
+.ingreds__intro {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 80px var(--pad) 48px;
+}
+
 /* ── Pin wrapper: total scroll budget for the cart animation ── */
 .ingreds__pin {
   position: relative;
-  height: 220vh;
+  height: 400vh;
 }
 
 .ingreds__sticky {
@@ -613,23 +624,19 @@ html, body {
 .ingreds__sticky .ingreds__head {
   padding: 0 var(--pad);
   width: 100%;
+  align-items: start;
 }
 
 /* ── Ingredient stage ── */
 .ingreds__stage {
-  position: relative;
-  margin-top: auto;
-  padding-top: 36px;
-  height: 170px;
-  overflow: visible;
+  padding-top: 24px;
 }
 
 .ingreds__row {
-  position: absolute;
-  left: 0;
-  bottom: 0;
   display: flex;
-  align-items: flex-end;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
   pointer-events: none;
   z-index: 1;
 }
@@ -638,14 +645,11 @@ html, body {
   position: relative;
   width: 60px;
   height: 60px;
-  margin-left: -12px;
   display: flex;
   flex-direction: column;
   align-items: center;
   transition: transform .55s cubic-bezier(.5,1.7,.5,1), opacity .35s ease;
 }
-
-.ingred:first-child { margin-left: 0; }
 
 .ingred {
   /* drop-shadow here applies AFTER the child img's url(#remove-white) has
@@ -680,13 +684,11 @@ html, body {
 /* ── Cart ── */
 .cart {
   position: absolute;
-  bottom: -8px;
-  left: 0;
-  width: 160px;
-  height: 128px;
-  z-index: 2;
+  width: 100px;
+  height: 80px;
   pointer-events: none;
-  transform: translateX(-9999px); /* JS overrides this via style.transform */
+  /* starts off-screen; JS drives top/left/transform each frame */
+  left: -120px;
 }
 
 .cart {
@@ -726,6 +728,11 @@ html, body {
 /* ── Receipt ── */
 .receipt {
   position: relative;
+  z-index: 1;
+  grid-column: 2;
+  grid-row: 1;
+  align-self: start;
+  margin-top: 28px;
   background: #fafaf3;
   padding: 22px 22px 0;
   font-family: 'Courier New', ui-monospace, monospace;
@@ -1294,7 +1301,7 @@ body[data-callout-style="pills"] .callout__dot::after    { display: none; }
   .callout__copy  { font-size: 11px; line-height: 1.35; }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
   :root { --plate-size: min(72vw, 420px); }
 
   .hero__grid,
@@ -1308,30 +1315,36 @@ body[data-callout-style="pills"] .callout__dot::after    { display: none; }
   .callout__name  { font-size: 13px; }
   .callout__copy  { font-size: 11px; }
 
-  /* ── Ingredients section: receipt above, cart stage below ── */
-  .ingreds__head {
+  /* ── Ingredients section: cart stage above, receipt below ── */
+
+  .ingreds__intro { padding: 60px var(--pad) 28px; }
+
+  .ingreds__head,
+  .ingreds__sticky .ingreds__head {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    padding: 24px var(--pad) 16px;
+    gap: 0;
+    padding: 12px var(--pad) 16px;
   }
 
-  /* Receipt floats to the top, capped in height so the cart stage
-     is always visible below it in the same sticky frame */
   .receipt {
-    order: -1;
     max-width: 100%;
     max-height: 42vh;
     overflow-y: auto;
+    margin-top: 12px;
   }
 
-  .ingreds__head-left { order: 1; }
+  .ingreds__pin    { height: 400vh; }
+  /* Full-viewport sticky: cream bg covers the title as it scrolls under from below */
+  .ingreds__sticky {
+    min-height: calc(100vh - var(--nav-h));
+    align-items: flex-start;
+    padding: 0;
+    z-index: 1;
+  }
 
-  .ingreds__pin    { height: 280vh; }
-  .ingreds__sticky { min-height: auto; padding: 0; }
-
-  .ingred { width: 64px; height: 64px; margin-left: -10px; }
-  .cart   { width: 140px; height: 112px; }
+  .ingred { width: 56px; height: 56px; }
+  .cart   { width: 72px; height: 58px; }
 
   .rp-footer__cols { grid-template-columns: 1fr 1fr; }
 

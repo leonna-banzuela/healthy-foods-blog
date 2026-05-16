@@ -164,21 +164,46 @@ function initRecipePage() {
     updateCart();
   }
 
-  /* ── Pinned cart animation ── */
+  /* ── Snake-pattern cart animation ── */
   const pin     = document.getElementById('ingreds-pin');
-  const stage   = document.getElementById('ingreds-stage');
   const cart    = document.getElementById('cart');
   const cartCnt = document.getElementById('cart-count');
-  const receipt = document.getElementById('receipt');
+  const headEl  = document.querySelector('.ingreds__head');
 
-  let collected     = -1;
-  let cartFirstPaint = true;
+  let collected        = -1;
+  let cachedRows       = null; /* invalidated on resize */
+  let cachedReceiptLeft = null; /* left edge of receipt relative to .ingreds__head */
+
+  /* Rows computed from offsetTop/offsetLeft — stable, not scroll-dependent */
+  function buildRows() {
+    const rows = [];
+    ingredients.forEach((el, idx) => {
+      const top = el.offsetTop;
+      let row = rows.find(r => Math.abs(r.top - top) < 8);
+      if (!row) { row = { top, elH: el.offsetHeight, items: [] }; rows.push(row); }
+      row.items.push({ el, idx, centerX: el.offsetLeft + el.offsetWidth / 2 });
+    });
+    rows.sort((a, b) => a.top - b.top);
+    rows.forEach(r => r.items.sort((a, b) => a.centerX - b.centerX));
+
+    /* Cache receipt's right-boundary for the cart.
+       On desktop the receipt sits to the right: use its left edge so the cart
+       disappears under it. On mobile the receipt stacks below (offsetLeft ≈ 0),
+       so treat as off-screen: use the full container width instead. */
+    const receiptEl   = document.getElementById('receipt');
+    const receiptLeft = receiptEl ? receiptEl.offsetLeft : headEl.offsetWidth;
+    const isDesktop   = receiptLeft > headEl.offsetWidth * 0.3;
+    cachedReceiptLeft = isDesktop ? receiptLeft : headEl.offsetWidth;
+
+    cachedRows = rows;
+    return rows;
+  }
 
   function refreshReceiptHighlight() {
     linesEl.querySelectorAll('.receipt__line').forEach((li, i) => {
       li.classList.toggle('is-on', i <= collected);
     });
-    if (cartCnt.firstChild) cartCnt.firstChild.nodeValue = String(collected + 1);
+    if (cartCnt.firstChild) cartCnt.firstChild.nodeValue = String(Math.max(0, collected + 1));
   }
 
   function collect(i) {
@@ -199,57 +224,69 @@ function initRecipePage() {
 
     const travel   = pin.offsetHeight - (vh - navH);
     const scrolled = Math.max(0, -pinRect.top);
-    const p = clamp01(travel > 0 ? scrolled / travel : 0);
+    const p        = clamp01(travel > 0 ? scrolled / travel : 0);
 
-    const stageRect   = stage.getBoundingClientRect();
-    const receiptRect = receipt.getBoundingClientRect();
+    if (!ingredients.length) return;
 
-    /* Start just off the left edge of the viewport so the cart always
-       enters from outside the screen regardless of stage position */
-    const startX = -(cart.offsetWidth + stageRect.left + 20);
+    /* Use cached rows — offsetTop is layout-stable, not scroll-dependent */
+    const rows    = cachedRows || buildRows();
+    const numRows = rows.length;
+    if (!numRows) return;
 
-    /* Desktop: travel to just left of the receipt panel */
-    let endX = receiptRect.left - stageRect.left - cart.offsetWidth - 24;
+    /* ── Which row and how far through it ── */
+    const rawRow = p * numRows;
+    const ri     = Math.min(Math.floor(rawRow), numRows - 1);
+    const rowP   = clamp01(rawRow - ri);
 
-    /* Mobile: receipt is stacked below (not to the right), so travel
-       across the visible stage width instead */
-    if (endX <= 0) {
-      endX = Math.max(stage.offsetWidth - cart.offsetWidth - 24, cart.offsetWidth);
-    }
+    const ltr   = ri % 2 === 0;
+    const row   = rows[ri];
+    const cartW = cart.offsetWidth;
+    const cartH = cart.offsetHeight;
+    const headW = headEl.offsetWidth;
 
-    const cartX = lerp(startX, endX, easeInOutCubic(p));
+    /* Y: centre cart vertically on this row (offsetTop is relative to .ingreds__head) */
+    const cartY = row.top + row.elH / 2 - cartH / 2;
 
-    /* On first paint: always sweep in from the left, even if the user
-       has already scrolled into the section (Sanity fetch timing) */
-    if (cartFirstPaint) {
-      cartFirstPaint = false;
-      cart.style.transition = '';
-      cart.style.transform  = 'translateX(' + startX + 'px)';
-      if (p > 0) {
-        requestAnimationFrame(function () {
-          cart.style.transition = 'transform 0.55s cubic-bezier(0.4,0,0.2,1)';
-          cart.style.transform  = 'translateX(' + cartX + 'px)';
-          setTimeout(function () { cart.style.transition = ''; }, 600);
-        });
-      }
-    } else {
-      cart.style.transform = 'translateX(' + cartX + 'px)';
-    }
+    /* X: both directions share the same boundary on the right (receipt's left edge).
+          LTR: enter from off-screen left → disappear under receipt.
+          RTL: emerge from under receipt → exit off-screen left. */
+    const ltrEnd = cachedReceiptLeft !== null ? cachedReceiptLeft : headW;
+    const x0     = ltr ? -cartW  : ltrEnd;
+    const x1     = ltr ?  ltrEnd : -cartW;
+    const cartX  = lerp(x0, x1, rowP);
 
-    /* Collect ingredients as cart centre crosses each ingredient centre */
-    const cartCenterX = cartX + cart.offsetWidth / 2;
-    let newCollected = -1;
-    ingredients.forEach((el, i) => {
-      const ix = el.offsetLeft + el.offsetWidth / 2;
-      if (cartCenterX >= ix) newCollected = i;
+    cart.style.top       = cartY + 'px';
+    cart.style.left      = cartX + 'px';
+    cart.style.transform = ltr ? '' : 'scaleX(-1)';
+
+    /* ── Collect / uncollect based on cart's actual X position ──
+       Each ingredient triggers when the cart centre crosses its centre,
+       respecting direction (LTR rows: cart sweeps right; RTL: sweeps left). */
+    const cartCenterX = cartX + cartW / 2;
+    let collectCount  = 0;
+
+    rows.forEach((r, rowIdx) => {
+      const rowLtr = rowIdx % 2 === 0;
+      r.items.forEach(item => {
+        let shouldCollect;
+        if (rowIdx < ri) {
+          shouldCollect = true;
+        } else if (rowIdx > ri) {
+          shouldCollect = false;
+        } else {
+          shouldCollect = rowLtr
+            ? cartCenterX >= item.centerX
+            : cartCenterX <= item.centerX;
+        }
+        const isCollected = item.el.classList.contains('is-collected');
+        if (shouldCollect && !isCollected) collect(item.idx);
+        if (!shouldCollect && isCollected) uncollect(item.idx);
+        if (shouldCollect) collectCount++;
+      });
     });
 
+    const newCollected = collectCount - 1;
     if (newCollected !== collected) {
-      if (newCollected > collected) {
-        for (let i = collected + 1; i <= newCollected; i++) collect(i);
-      } else {
-        for (let i = collected; i > newCollected; i--) uncollect(i);
-      }
       collected = newCollected;
       refreshReceiptHighlight();
     }
@@ -257,10 +294,11 @@ function initRecipePage() {
 
   /* ── Init ── */
   window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', () => requestAnimationFrame(update));
+  window.addEventListener('resize', () => { cachedRows = null; requestAnimationFrame(update); });
 
-  /* Wait for fonts/images to settle before placing the morph plate */
+  /* Wait for fonts/images to settle, then build row cache and run first frame */
   setTimeout(() => {
+    buildRows();
     update();
     morph.classList.add('is-ready');
   }, 60);
