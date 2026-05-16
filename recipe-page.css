@@ -1373,7 +1373,16 @@ body[data-callout-style="pills"] .callout__dot::after    { display: none; }
     transform: translate(0, -50%);
   }
 
-  /* c2/c3 live in right corners → anchor from right edge */
+  /* c1/c4 in left corners — override the default translate(-100%) that shifts them off-screen */
+  .c1 .callout__label,
+  .c4 .callout__label {
+    text-align: left;
+    border-left: 1px solid rgba(237,206,105,.55);
+    border-right: none;
+    transform: translate(0, -50%);
+  }
+
+  /* c2/c3 in right corners → anchor from right edge */
   .c2 .callout__label,
   .c3 .callout__label {
     text-align: right;
@@ -1383,7 +1392,9 @@ body[data-callout-style="pills"] .callout__dot::after    { display: none; }
   }
 
   /* Tick: left side for left-corner labels */
-  .callout__label::before { left: 0; right: auto; }
+  .callout__label::before,
+  .c1 .callout__label::before,
+  .c4 .callout__label::before { left: 0; right: auto; }
 
   /* Tick: right side for right-corner labels */
   .c2 .callout__label::before,
