@@ -67,7 +67,7 @@ function initFavesCarousel(deck) {
 
     const R         = mobile ? 420 : 800;
     const angleStep = mobile ? 18  : 10;
-    const bottomY   = mobile ? 516 : 486;
+    const bottomY   = mobile ? 360 : 486;
     const Y_center  = bottomY + R;
     const scaleStep = 0.07;
 

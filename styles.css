@@ -748,12 +748,16 @@ li:has(> .navbar__link--active)::before {
 /* ── Faves responsive: mobile ── */
 
 @media (max-width: 640px) {
+  .faves {
+    padding: clamp(32px, 5vh, 48px) 0;
+  }
+
   .faves__heading {
     font-size: 28px;
   }
 
   .faves__stage {
-    height: 500px;
+    height: 420px;
   }
 
   .faves__nav--prev { left: 20px; }
