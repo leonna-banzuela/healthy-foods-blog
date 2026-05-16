@@ -55,14 +55,18 @@ function buildRecipeCardHTML(recipe, opts = {}) {
   const servings = recipe.defaultServings || 1;
   const servLabel = servings + ' serving' + (servings !== 1 ? 's' : '');
 
-  return `<article class="${cls}" data-slug="${escHtml(slug)}"${click} style="${cursor}">
-  <div class="recipe-card__visual">
-    <img class="recipe-card__plate" src="${photo}" alt="${escHtml(recipe.title || '')}">
-  </div>
-  <div class="recipe-card__body">
-    <h3 class="recipe-card__title">${escHtml(recipe.title || 'Untitled')}</h3>
-    <p class="recipe-card__desc">${escHtml(recipe.shortDescription || '')}</p>
-    <div class="recipe-card__stats">
+  const statsHtml = forCarousel
+    ? `<div class="recipe-card__stats">
+      <div class="recipe-card__stat">
+        <span class="recipe-card__stat-label">Cooking Time</span>
+        <span class="recipe-card__stat-value">${escHtml(recipe.cookingTime || '—')}</span>
+      </div>
+      <div class="recipe-card__stat">
+        <span class="recipe-card__stat-label">Calories</span>
+        <span class="recipe-card__stat-value">${recipe.calories ? recipe.calories + ' kcal' : '—'}</span>
+      </div>
+    </div>`
+    : `<div class="recipe-card__stats">
       <div class="recipe-card__stat">
         <span class="recipe-card__stat-label">Cooking Time</span>
         <span class="recipe-card__stat-value">${escHtml(recipe.cookingTime || '—')}</span>
@@ -76,7 +80,16 @@ function buildRecipeCardHTML(recipe, opts = {}) {
         <span class="recipe-card__stat-value">${escHtml(servLabel)}</span>
       </div>
     </div>
-    <div class="recipe-card__tags">${tags}</div>
+    <div class="recipe-card__tags">${tags}</div>`;
+
+  return `<article class="${cls}" data-slug="${escHtml(slug)}"${click} style="${cursor}">
+  <div class="recipe-card__visual">
+    <img class="recipe-card__plate" src="${photo}" alt="${escHtml(recipe.title || '')}">
+  </div>
+  <div class="recipe-card__body">
+    <h3 class="recipe-card__title">${escHtml(recipe.title || 'Untitled')}</h3>
+    <p class="recipe-card__desc">${escHtml(recipe.shortDescription || '')}</p>
+    ${statsHtml}
   </div>
 </article>`;
 }

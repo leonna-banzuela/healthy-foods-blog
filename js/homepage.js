@@ -78,8 +78,19 @@ function initFavesCarousel(deck) {
       card.style.cursor        = 'default';
     });
 
-    for (let slot = -visibleSide; slot <= visibleSide; slot++) {
-      const card     = cardAtSlot(slot);
+    /* Process center-out so the active (slot 0) card wins when N < slots */
+    const slotsOrdered = [];
+    for (let i = 0; i <= visibleSide; i++) {
+      slotsOrdered.push(i);
+      if (i !== 0) slotsOrdered.push(-i);
+    }
+    const assigned = new Set();
+
+    for (const slot of slotsOrdered) {
+      const card = cardAtSlot(slot);
+      if (assigned.has(card)) continue;
+      assigned.add(card);
+
       const absSlot  = Math.abs(slot);
       const thetaRad = slot * angleStep * Math.PI / 180;
       const thetaDeg = slot * angleStep;
